@@ -1,0 +1,36 @@
+<div class="container-fluid p-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary fw-bold"><i class="fas fa-calendar-alt me-2"></i>Agenda de Citas</h2>
+    <button class="btn btn-primary" (click)="mostrarModalCreacion = true">
+      <i class="bi bi-plus-lg me-2"></i>Nueva Cita
+    </button>
+  </div>
+
+  <div class="card shadow border-0">
+    <div class="card-body p-0 p-md-3">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="mostrarModalCreacion"></div>
+
+<div class="modal fade show d-block" *ngIf="mostrarModalCreacion" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Agendar Nueva Cita</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
+      </div>
+
+      <div class="modal-body p-0">
+        <app-formulario-cita (onGuardar)="onCitaGuardada()" (onCancelar)="cerrarModal()">
+        </app-formulario-cita>
+      </div>
+
+    </div>
+  </div>
+</div>

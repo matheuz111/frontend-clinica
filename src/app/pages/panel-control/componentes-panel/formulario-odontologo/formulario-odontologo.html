@@ -1,0 +1,71 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" *ngIf="visible" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-user-md me-2"></i>{{ odontologo ? 'Editar' : 'Nuevo' }} Odontólogo
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="form">
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="nombre"
+                [class.is-invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+              <div class="invalid-feedback">Requerido (solo letras).</div>
+            </div>
+            
+            <div class="col-md-6">
+              <label class="form-label">Apellido</label>
+              <input type="text" class="form-control" formControlName="apellido"
+                [class.is-invalid]="form.get('apellido')?.invalid && form.get('apellido')?.touched">
+              <div class="invalid-feedback">Requerido.</div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Especialidad</label>
+              <select class="form-select" formControlName="especialidad"
+                [class.is-invalid]="form.get('especialidad')?.invalid && form.get('especialidad')?.touched">
+                <option value="">Seleccione...</option>
+                <option value="Odontología General">Odontología General</option>
+                <option value="Ortodoncia">Ortodoncia</option>
+                <option value="Endodoncia">Endodoncia</option>
+                <option value="Pediatría">Pediatría</option>
+                <option value="Cirugía Maxilofacial">Cirugía Maxilofacial</option>
+              </select>
+              <div class="invalid-feedback">Seleccione una especialidad.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Teléfono</label>
+              <input type="text" class="form-control" formControlName="telefono" placeholder="999888777"
+                [class.is-invalid]="form.get('telefono')?.invalid && form.get('telefono')?.touched">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="doc@clinica.com"
+                [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched">
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardar()" [disabled]="form.invalid">
+          Guardar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

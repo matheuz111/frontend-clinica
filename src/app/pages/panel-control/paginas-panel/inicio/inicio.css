@@ -1,0 +1,41 @@
+.card-stat {
+    transition: transform 0.2s ease-in-out;
+    border-radius: 12px;
+}
+
+.card-stat:hover {
+    transform: translateY(-5px);
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-box i {
+    font-size: 2.5rem;
+    /* Make icon fill the square */
+}
+
+.avatar-sm {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    font-size: 0.95rem;
+    padding: 1rem 0.5rem;
+}

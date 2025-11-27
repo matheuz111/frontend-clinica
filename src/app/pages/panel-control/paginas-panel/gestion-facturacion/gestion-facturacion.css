@@ -1,0 +1,13 @@
+.detail-card {
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+}
+
+.bg-warning {
+    color: #000; /* Texto oscuro para fondo amarillo */
+}

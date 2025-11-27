@@ -1,0 +1,19 @@
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-header {
+    font-weight: 600;
+    background: linear-gradient(45deg, #0d6efd, #0a58ca);
+}
+
+/* Animación suave para cuando aparece el paciente seleccionado */
+.alert-info {
+    transition: all 0.3s ease-in-out;
+    border-left: 4px solid #0dcaf0;
+}
+
+textarea {
+    resize: none;
+}

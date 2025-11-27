@@ -1,0 +1,86 @@
+<div class="d-flex" [class.toggled]="!sidebarAbierto" id="wrapper">
+
+  <div class="bg-dark border-end" id="sidebar-wrapper">
+    <div
+      class="sidebar-heading text-white text-center py-4 fs-4 fw-bold border-bottom border-secondary d-flex align-items-center justify-content-center">
+      <img src="https://i.imgur.com/Oz512AH.png" alt="Logo" height="40" class="me-2">
+      <span>Sonrisa Plena</span>
+    </div>
+
+    <div class="list-group list-group-flush my-3">
+      <a routerLink="/panel/inicio" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-tachometer-alt me-2 width-25"></i>Inicio
+      </a>
+
+      <a routerLink="/panel/citas" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-calendar-alt me-2 width-25"></i>Agenda de Citas
+      </a>
+
+      <div class="sidebar-subheading text-muted text-uppercase fw-bold small px-3 mt-3 mb-1">Gestión</div>
+
+      <a routerLink="/panel/pacientes" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-user-injured me-2 width-25"></i>Pacientes
+      </a>
+      <a routerLink="/panel/odontologos" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-user-md me-2 width-25"></i>Odontólogos
+      </a>
+
+      <div class="sidebar-subheading text-muted text-uppercase fw-bold small px-3 mt-3 mb-1">Admin</div>
+
+      <a routerLink="/panel/usuarios" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-users-cog me-2 width-25"></i>Usuarios
+      </a>
+      <a routerLink="/panel/facturacion" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-file-invoice-dollar me-2 width-25"></i>Facturación
+      </a>
+      <a routerLink="/panel/configuracion" routerLinkActive="active"
+        class="list-group-item list-group-item-action bg-transparent text-white-50">
+        <i class="fas fa-cogs me-2 width-25"></i>Configuración
+      </a>
+    </div>
+  </div>
+
+  <div id="page-content-wrapper">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4 py-3">
+      <div class="d-flex align-items-center w-100 justify-content-between">
+
+        <button class="btn btn-light border" id="menu-toggle" (click)="toggleSidebar()">
+          <i class="bi bi-list me-1"></i>Menú
+        </button>
+
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center text-dark" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="text-end me-2 d-none d-md-block">
+              <span class="d-block fw-bold small">{{ nombreUsuario() }} {{ apellidoUsuario() }}</span>
+              <span class="d-block text-muted x-small">{{ rolUsuario() }}</span>
+            </div>
+            <i class="bi bi-person-circle fs-2 text-primary"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+            <li><a class="dropdown-item" routerLink="/panel/perfil"><i class="fas fa-user-circle me-2"></i>Mi Perfil</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><button class="dropdown-item text-danger" (click)="cerrarSesion()"><i
+                  class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</button></li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+
+    <div class="container-fluid p-4 bg-light h-100" style="min-height: calc(100vh - 80px);">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+    <h5 class="mb-0 text-primary fw-bold">{{ title }}</h5>
+    <button class="btn btn-primary btn-sm" (click)="onAdd.emit()">
+      <i class="bi bi-plus-lg me-2"></i>{{ addButtonText }}
+    </button>
+  </div>
+  
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th *ngFor="let col of columnConfig" class="ps-3 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">
+              {{ col.header }}
+            </th>
+            <th class="text-end pe-4 text-secondary text-uppercase text-xs font-weight-bolder opacity-7">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data" (click)="onRowClicked.emit(item)" style="cursor: pointer">
+            
+            <td *ngFor="let col of columnConfig" class="ps-3">
+              <ng-container *ngIf="!col.isDate && !col.isCurrency">
+                {{ getValor(item, col.name) }}
+              </ng-container>
+              
+              <ng-container *ngIf="col.isDate">
+                {{ getValor(item, col.name) | date:'dd/MM/yyyy' }}
+              </ng-container>
+
+              <ng-container *ngIf="col.isCurrency">
+                {{ getValor(item, col.name) | currency:'PEN':'symbol' }}
+              </ng-container>
+            </td>
+
+            <td class="text-end pe-3">
+              <button class="btn btn-link text-primary p-1" (click)="$event.stopPropagation(); onEdit.emit(item)">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-link text-danger p-1" (click)="$event.stopPropagation(); onDelete.emit(item)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+
+          </tr>
+          
+          <tr *ngIf="data.length === 0">
+            <td [attr.colspan]="columnConfig.length + 1" class="text-center py-4 text-muted">
+              No hay registros para mostrar.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

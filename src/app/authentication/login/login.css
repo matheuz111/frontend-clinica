@@ -1,0 +1,313 @@
+/* src/app/authentication/login/login.css */
+
+/* Contenedor principal - tu HTML usa .login-page */
+.login-page {
+  overflow: hidden;
+}
+
+/* Panel izquierdo con información y fondo */
+.info-panel {
+  background: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+
+.info-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(41, 128, 185, 0.85), rgba(52, 152, 219, 0.9));
+  z-index: 1;
+}
+
+.info-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  animation: slideInUp 0.7s ease-out;
+}
+
+.info-logo {
+  width: 100px;
+  height: 100px;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 2rem;
+}
+
+.info-logo .bi-emoji-smile-fill {
+  font-size: 60px;
+  color: white;
+}
+
+.info-content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.info-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 500px;
+  margin: 0 auto;
+  color: white;
+}
+
+/* Panel derecho con formulario */
+.form-panel {
+  flex: 1;
+  background-color: #f0f7ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 480px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 3rem 2.5rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.form-container h2 {
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.form-container > p {
+  text-align: center;
+  color: #718096;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+/* Grupos de formulario */
+.mb-3, .mb-4 {
+  text-align: left;
+}
+
+.form-check-label {
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+/* Wrapper para inputs con iconos */
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper .form-control {
+  padding-right: 2.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+/* Iconos dentro de inputs */
+.input-wrapper .input-icon-right {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  color: #a0aec0;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease-in-out, color 0.2s ease;
+}
+
+.input-wrapper .toggle-password {
+  cursor: pointer;
+}
+
+.input-wrapper .toggle-password:hover {
+  color: #2b6cb0;
+}
+
+.input-wrapper .toggle-password:active {
+  transform: translateY(-50%) scale(0.9);
+}
+
+/* Opciones adicionales (recordar contraseña, olvidaste contraseña) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.form-options label {
+  display: flex;
+  align-items: center;
+  color: #4a5568;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.form-options input[type="checkbox"] {
+  margin-right: 0.5rem;
+  width: auto;
+}
+
+.form-options a {
+  color: #3182ce;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.form-options a:hover {
+  color: #2c5aa0;
+}
+
+/* Botón de submit - tu HTML usa .btn-primary */
+.btn-primary {
+  width: 100%;
+  padding: 0.875rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #4299e1 !important;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  border: none !important;
+}
+
+.btn-primary:hover {
+  background-color: #3182ce !important;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  background-color: #a0aec0 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Enlace de registro y cambio de modo */
+.text-center p {
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.text-center a {
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.text-center a:hover {
+  color: #2c5aa0;
+  text-decoration: none;
+}
+
+/* Mensajes de error - tu HTML usa .alert-danger */
+.alert-danger {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.validation-error {
+  color: #dc3545;
+  font-size: 0.875em;
+  text-align: left;
+  margin-top: 0.25rem;
+  padding-left: 0.25rem;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .info-panel {
+    min-height: 30vh;
+    padding: 1.5rem;
+  }
+
+  .info-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .info-content p {
+    font-size: 0.95rem;
+  }
+
+  .info-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-logo .bi-hospital-fill {
+    font-size: 48px;
+  }
+
+  .form-panel {
+    padding: 1.5rem;
+  }
+
+  .form-container {
+    padding: 2rem 1.5rem;
+  }
+}

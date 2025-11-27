@@ -1,0 +1,122 @@
+<div class="container-fluid p-4">
+
+  <h2 class="mb-4 fw-bold text-dark"><i class="fas fa-id-card me-2"></i>Mi Perfil</h2>
+
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100 text-center bg-white">
+        <div class="card-body py-5">
+
+          <div class="avatar-profile mx-auto mb-3">
+            <i class="bi bi-person-circle text-primary" style="font-size: 120px;"></i>
+          </div>
+
+          <h4 class="fw-bold mb-1">{{ usuario?.nombres }} {{ usuario?.apellidos }}</h4>
+          <p class="text-muted mb-2">{{ usuario?.email }}</p>
+
+          <span class="badge bg-light text-primary border border-primary rounded-pill px-3 py-2 text-uppercase">
+            {{ usuario?.rol }}
+          </span>
+
+          <hr class="my-4 w-50 mx-auto">
+
+          <div class="text-start px-3">
+            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Detalles de Cuenta</small>
+            <ul class="list-unstyled mt-2 mb-0">
+              <li class="mb-2"><i class="fas fa-id-badge me-2 text-secondary"></i> <strong>ID:</strong> {{
+                usuario?.documentoIdentidad }}</li>
+              <li class="mb-2"><i class="fas fa-calendar-alt me-2 text-secondary"></i> <strong>Miembro desde:</strong>
+                {{ usuario?.fechaRegistro | date:'longDate' }}</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white py-3 border-bottom-0">
+          <h5 class="mb-0 fw-bold text-secondary">Editar Información</h5>
+        </div>
+
+        <div class="card-body p-4">
+
+          <div *ngIf="mensajeExito" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i> {{ mensajeExito }}
+            <button type="button" class="btn-close" (click)="mensajeExito=''"></button>
+          </div>
+
+          <div *ngIf="mensajeError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i> {{ mensajeError }}
+            <button type="button" class="btn-close" (click)="mensajeError=''"></button>
+          </div>
+
+          <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()">
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombres</label>
+                <input type="text" class="form-control" formControlName="nombres"
+                  [class.is-invalid]="perfilForm.get('nombres')?.invalid && perfilForm.get('nombres')?.touched">
+                <div class="invalid-feedback">Campo requerido.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Apellidos</label>
+                <input type="text" class="form-control" formControlName="apellidos"
+                  [class.is-invalid]="perfilForm.get('apellidos')?.invalid && perfilForm.get('apellidos')?.touched">
+                <div class="invalid-feedback">Campo requerido.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Documento de Identidad</label>
+                <input type="text" class="form-control bg-light" formControlName="documentoIdentidad"
+                  title="No se puede editar el documento">
+                <div class="form-text">Este campo no es editable por seguridad.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Correo Electrónico</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="far fa-envelope"></i></span>
+                  <input type="email" class="form-control" formControlName="email"
+                    [class.is-invalid]="perfilForm.get('email')?.invalid && perfilForm.get('email')?.touched">
+                </div>
+                <div class="invalid-feedback d-block" *ngIf="perfilForm.get('email')?.errors">Correo inválido.</div>
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label">Teléfono de Contacto</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="fas fa-phone-alt"></i></span>
+                  <input type="tel" class="form-control" formControlName="telefono" placeholder="Opcional (9 dígitos)"
+                    maxlength="9" pattern="[0-9]*" inputmode="numeric"
+                    [class.is-invalid]="perfilForm.get('telefono')?.invalid && perfilForm.get('telefono')?.touched">
+                </div>
+                <div class="invalid-feedback d-block"
+                  *ngIf="perfilForm.get('telefono')?.errors && perfilForm.get('telefono')?.touched">
+                  El teléfono debe tener exactamente 9 dígitos numéricos.
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4 pt-3 border-top">
+              <button type="button" class="btn btn-outline-secondary me-2" (click)="cargarPerfil()">
+                Restablecer
+              </button>
+              <button type="submit" class="btn btn-primary px-4"
+                [disabled]="perfilForm.invalid || perfilForm.pristine || cargando">
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+                {{ cargando ? 'Guardando...' : 'Guardar Cambios' }}
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

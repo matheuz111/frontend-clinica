@@ -1,0 +1,75 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" *ngIf="visible" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content border-0 shadow">
+      
+      <div class="modal-header bg-primary text-white">
+        <div>
+          <h5 class="modal-title fw-bold"><i class="fas fa-stethoscope me-2"></i>Registrar Consulta</h5>
+          <small class="mb-0 opacity-75" *ngIf="pacienteNombre">Paciente: {{ pacienteNombre }}</small>
+        </div>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form [formGroup]="formConsulta">
+          
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Odontólogo Tratante</label>
+              <select class="form-select" formControlName="odontologoId"
+                [class.is-invalid]="formConsulta.get('odontologoId')?.invalid && formConsulta.get('odontologoId')?.touched">
+                <option value="">Seleccione...</option>
+                <option *ngFor="let doc of odontologos" [value]="doc.id">
+                  {{ doc.nombre }} {{ doc.apellido }}
+                </option>
+              </select>
+              <div class="invalid-feedback">Requerido.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">Motivo de Consulta</label>
+              <input type="text" class="form-control" formControlName="motivo" placeholder="Ej: Dolor en molar..."
+                [class.is-invalid]="formConsulta.get('motivo')?.invalid && formConsulta.get('motivo')?.touched">
+              <div class="invalid-feedback">Requerido.</div>
+            </div>
+          </div>
+
+          <hr class="my-4 text-muted">
+
+          <div class="mb-4">
+            <label class="form-label fw-bold text-primary"><i class="fas fa-notes-medical me-2"></i>Diagnóstico Clínico</label>
+            <textarea class="form-control" rows="4" formControlName="diagnostico" 
+              placeholder="Describa el diagnóstico detallado del paciente..."
+              [class.is-invalid]="formConsulta.get('diagnostico')?.invalid && formConsulta.get('diagnostico')?.touched"></textarea>
+            <div class="invalid-feedback">El diagnóstico es obligatorio.</div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold text-success"><i class="fas fa-band-aid me-2"></i>Tratamiento / Procedimiento Realizado</label>
+            <textarea class="form-control" rows="4" formControlName="tratamiento"
+              placeholder="Describa el procedimiento realizado y las indicaciones..."
+              [class.is-invalid]="formConsulta.get('tratamiento')?.invalid && formConsulta.get('tratamiento')?.touched"></textarea>
+            <div class="invalid-feedback">El tratamiento es obligatorio.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label text-muted small">Notas Adicionales (Opcional)</label>
+            <input type="text" class="form-control form-control-sm" formControlName="notas" placeholder="Alergias, observaciones, etc.">
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary px-4" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="btn btn-primary px-4" (click)="guardar()" [disabled]="formConsulta.invalid || cargando">
+          <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+          Guardar Historia
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

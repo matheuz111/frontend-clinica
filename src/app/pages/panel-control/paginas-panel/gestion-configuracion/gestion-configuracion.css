@@ -1,0 +1,30 @@
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Input groups más limpios */
+.input-group-text {
+    border-right: 0;
+}
+.form-control {
+    border-left: 0;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da; /* O tu color primario */
+}

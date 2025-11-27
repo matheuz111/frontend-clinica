@@ -1,0 +1,30 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" tabindex="-1" *ngIf="visible" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow">
+      
+      <div class="modal-header bg-light">
+        <h5 class="modal-title text-dark fw-bold">{{ titulo }}</h5>
+        <button type="button" class="btn-close" (click)="cancelar()"></button>
+      </div>
+
+      <div class="modal-body text-center py-4">
+        <div class="mb-3 text-warning">
+          <i class="fas fa-exclamation-circle fa-3x"></i>
+        </div>
+        <p class="mb-0 text-muted">{{ mensaje }}</p>
+      </div>
+
+      <div class="modal-footer justify-content-center border-0 pb-4">
+        <button type="button" class="btn btn-secondary px-4" (click)="cancelar()">
+          {{ textoCancelar }}
+        </button>
+        <button type="button" class="btn btn-danger px-4" (click)="confirmar()">
+          {{ textoConfirmar }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

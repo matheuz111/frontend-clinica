@@ -1,0 +1,19 @@
+/* Asegura que el modal aparezca sobre todo */
+.modal {
+    z-index: 1055;
+}
+.modal-backdrop {
+    z-index: 1050;
+}
+
+/* Estilo para celdas de tabla */
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+/* Scroll suave dentro del modal */
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}

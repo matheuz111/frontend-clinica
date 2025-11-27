@@ -1,0 +1,28 @@
+<div class="container-fluid p-4">
+  
+  <app-tabla-generica
+    [data]="odontologos"
+    [columnConfig]="columnas"
+    title="Directorio de Odontólogos"
+    addButtonText="Nuevo Odontólogo"
+    (onAdd)="abrirCrear()"
+    (onEdit)="abrirEditar($event)"
+    (onDelete)="abrirEliminar($event)">
+  </app-tabla-generica>
+
+</div>
+
+<app-formulario-odontologo
+  [visible]="mostrarFormulario"
+  [odontologo]="odontologoSeleccionado"
+  (onGuardar)="guardarOdontologo($event)"
+  (onCancelar)="mostrarFormulario = false">
+</app-formulario-odontologo>
+
+<app-dialogo-confirmacion
+  [visible]="mostrarConfirmacion"
+  titulo="Eliminar Profesional"
+  [mensaje]="'¿Está seguro que desea eliminar al Dr(a). ' + (odontologoAEliminar?.nombre || '') + '?'"
+  (onConfirmar)="confirmarEliminacion()"
+  (onCancelar)="mostrarConfirmacion = false">
+</app-dialogo-confirmacion>

@@ -1,0 +1,98 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" *ngIf="visible" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-user-injured me-2"></i>{{ paciente ? 'Editar' : 'Registrar' }} Paciente
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="form">
+          
+          <h6 class="text-primary border-bottom pb-2 mb-3">Datos Personales</h6>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Documento Identidad *</label>
+              <input type="text" class="form-control" formControlName="documentoIdentidad"
+                [class.is-invalid]="form.get('documentoIdentidad')?.invalid && form.get('documentoIdentidad')?.touched">
+              <div class="invalid-feedback">Requerido.</div>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Nombre *</label>
+              <input type="text" class="form-control" formControlName="nombre"
+                [class.is-invalid]="form.get('nombre')?.invalid && form.get('nombre')?.touched">
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label">Apellido *</label>
+              <input type="text" class="form-control" formControlName="apellido"
+                [class.is-invalid]="form.get('apellido')?.invalid && form.get('apellido')?.touched">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Fecha de Nacimiento</label>
+              <input type="date" class="form-control" formControlName="fechaNacimiento">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Género</label>
+              <select class="form-select" formControlName="genero">
+                <option value="">Seleccione...</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <h6 class="text-primary border-bottom pb-2 mb-3 mt-4">Contacto y Ubicación</h6>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Teléfono</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input type="text" class="form-control" formControlName="telefono" placeholder="999 999 999">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Correo Electrónico</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input type="email" class="form-control" formControlName="email" placeholder="paciente@email.com">
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" formControlName="direccion" placeholder="Av. Principal 123">
+            </div>
+          </div>
+
+          <h6 class="text-danger border-bottom pb-2 mb-3 mt-4">Información Médica</h6>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Alergias / Observaciones</label>
+              <textarea class="form-control" rows="2" formControlName="alergias" placeholder="Ej: Penicilina, Ibuprofeno..."></textarea>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardar()" [disabled]="form.invalid">
+          Guardar Paciente
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

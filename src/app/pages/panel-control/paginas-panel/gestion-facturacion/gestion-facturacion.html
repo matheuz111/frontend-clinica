@@ -1,0 +1,89 @@
+<div class="container-fluid p-4">
+  <div class="row g-4">
+    
+    <div class="col-lg-8">
+      <app-tabla-generica
+        [data]="facturas"
+        [columnConfig]="columnas"
+        title="Facturación"
+        addButtonText="Nueva Factura"
+        (onAdd)="alAgregar()"
+        (onEdit)="alEditar($event)"
+        (onDelete)="alEliminar($event)"
+        (onRowClicked)="alSeleccionar($event)">
+      </app-tabla-generica>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0 h-100 detail-card">
+        <div class="card-body">
+          
+          <div *ngIf="facturaSeleccionada; else sinSeleccion" class="animate__animated animate__fadeIn">
+            <h5 class="card-title text-primary fw-bold mb-4">
+              <i class="fas fa-receipt me-2"></i>Detalle Factura #{{ facturaSeleccionada.id }}
+            </h5>
+
+            <div class="mb-3">
+              <label class="text-muted small fw-bold text-uppercase">Paciente</label>
+              <p class="mb-0 fs-5">
+                {{ facturaSeleccionada.paciente?.nombre }} {{ facturaSeleccionada.paciente?.apellido }}
+              </p>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Fecha Emisión:</span>
+              <span class="fw-bold">{{ facturaSeleccionada.fechaEmision | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Tipo:</span>
+              <span>{{ facturaSeleccionada.tipoComprobante }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+              <span class="text-muted">Estado:</span>
+              <span class="badge rounded-pill" 
+                [class.bg-success]="facturaSeleccionada.estadoPago === 'Pagado'"
+                [class.bg-warning]="facturaSeleccionada.estadoPago === 'Pendiente'"
+                [class.bg-danger]="facturaSeleccionada.estadoPago === 'Anulado'">
+                {{ facturaSeleccionada.estadoPago }}
+              </span>
+            </div>
+
+            <div class="bg-light p-3 rounded text-center mt-4">
+              <small class="text-muted">Total a Pagar</small>
+              <h2 class="text-dark fw-bold mb-0">S/ {{ facturaSeleccionada.montoTotal | number:'1.2-2' }}</h2>
+            </div>
+
+          </div>
+
+          <ng-template #sinSeleccion>
+            <div class="text-center text-muted py-5">
+              <i class="fas fa-mouse-pointer fa-3x mb-3 opacity-25"></i>
+              <p>Selecciona una factura de la lista para ver el detalle completo.</p>
+            </div>
+          </ng-template>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-formulario-facturacion
+  [visible]="mostrarFormulario"
+  [factura]="facturaParaEditar"
+  (onGuardar)="guardarFactura($event)"
+  (onCancelar)="mostrarFormulario = false">
+</app-formulario-facturacion>
+
+<app-dialogo-confirmacion
+  [visible]="mostrarConfirmacion"
+  titulo="Anular Factura"
+  mensaje="¿Estás seguro de que deseas anular esta factura? Esta acción no se puede deshacer."
+  (onConfirmar)="confirmarEliminacion()"
+  (onCancelar)="mostrarConfirmacion = false">
+</app-dialogo-confirmacion>

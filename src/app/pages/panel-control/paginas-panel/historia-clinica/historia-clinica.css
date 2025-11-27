@@ -1,0 +1,7 @@
+/* Estilos simples para diferenciar la cabecera */
+h2 {
+    font-family: 'Segoe UI', sans-serif;
+}
+strong {
+    color: #212529;
+}

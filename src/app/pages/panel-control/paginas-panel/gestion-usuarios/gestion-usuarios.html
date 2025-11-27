@@ -1,0 +1,28 @@
+<div class="container-fluid p-4">
+  
+  <app-tabla-generica
+    [data]="usuarios"
+    [columnConfig]="columnas"
+    title="Gestión de Usuarios y Accesos"
+    addButtonText="Crear Usuario"
+    (onAdd)="abrirCrear()"
+    (onEdit)="abrirEditar($event)"
+    (onDelete)="abrirEliminar($event)">
+  </app-tabla-generica>
+
+</div>
+
+<app-formulario-usuario
+  [visible]="mostrarFormulario"
+  [usuario]="usuarioSeleccionado"
+  (onGuardar)="guardarUsuario($event)"
+  (onCancelar)="mostrarFormulario = false">
+</app-formulario-usuario>
+
+<app-dialogo-confirmacion
+  [visible]="mostrarConfirmacion"
+  titulo="Eliminar Usuario"
+  [mensaje]="'¿Está seguro de eliminar el acceso de ' + (usuarioAEliminar?.nombres || '') + '? Esta acción es irreversible.'"
+  (onConfirmar)="confirmarEliminacion()"
+  (onCancelar)="mostrarConfirmacion = false">
+</app-dialogo-confirmacion>

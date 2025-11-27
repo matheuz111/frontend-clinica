@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="card shadow-sm border-0" style="width: 100%; max-width: 400px;">
+    <div class="card-body p-4">
+      
+      <div class="text-center mb-4">
+        <h3 class="fw-bold text-primary">Recuperar Cuenta</h3>
+        <p class="text-muted small">Ingresa tu correo electrónico para recibir instrucciones.</p>
+      </div>
+
+      <div *ngIf="mensajeExito" class="alert alert-success text-center animate__animated animate__fadeIn">
+        <i class="fas fa-check-circle me-1"></i> {{ mensajeExito }}
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger text-center animate__animated animate__fadeIn">
+        <i class="fas fa-exclamation-circle me-1"></i> {{ error }}
+      </div>
+
+      <form [formGroup]="formRecuperacion" (ngSubmit)="enviarSolicitud()">
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Correo Electrónico</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white text-muted"><i class="fas fa-envelope"></i></span>
+            <input 
+              type="email" 
+              id="email" 
+              class="form-control" 
+              formControlName="email" 
+              placeholder="ejemplo@correo.com"
+              [class.is-invalid]="formRecuperacion.get('email')?.invalid && formRecuperacion.get('email')?.touched"
+            >
+          </div>
+          <div class="invalid-feedback" *ngIf="formRecuperacion.get('email')?.errors?.['required']">
+            El correo es obligatorio.
+          </div>
+          <div class="invalid-feedback" *ngIf="formRecuperacion.get('email')?.errors?.['email']">
+            Ingresa un correo válido.
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="cargando || formRecuperacion.invalid">
+            <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+            {{ cargando ? 'Enviando...' : 'Enviar enlace' }}
+          </button>
+          
+          <button type="button" class="btn btn-outline-secondary" (click)="volver()">
+            Volver al Login
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

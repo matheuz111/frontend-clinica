@@ -1,0 +1,28 @@
+<div class="container-fluid p-4">
+  
+  <app-tabla-generica
+    [data]="pacientes"
+    [columnConfig]="columnas"
+    title="Directorio de Pacientes"
+    addButtonText="Registrar Paciente"
+    (onAdd)="abrirCrear()"
+    (onEdit)="abrirEditar($event)"
+    (onDelete)="abrirEliminar($event)">
+  </app-tabla-generica>
+
+</div>
+
+<app-formulario-paciente
+  [visible]="mostrarFormulario"
+  [paciente]="pacienteSeleccionado"
+  (onGuardar)="guardarPaciente($event)"
+  (onCancelar)="mostrarFormulario = false">
+</app-formulario-paciente>
+
+<app-dialogo-confirmacion
+  [visible]="mostrarConfirmacion"
+  titulo="Eliminar Paciente"
+  [mensaje]="'¿Está seguro que desea eliminar al paciente ' + (pacienteAEliminar?.nombre || '') + '? Se borrará su historial y citas asociadas.'"
+  (onConfirmar)="confirmarEliminacion()"
+  (onCancelar)="mostrarConfirmacion = false">
+</app-dialogo-confirmacion>

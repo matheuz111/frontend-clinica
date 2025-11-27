@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <h2 class="mb-4 fw-bold text-primary"><i class="fas fa-cogs me-2"></i>Configuración</h2>
+
+  <div class="row">
+    
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center py-5">
+          <div class="avatar-circle bg-primary text-white mx-auto mb-3 animate__animated animate__pulse">
+            <i class="fas fa-user fa-3x"></i>
+          </div>
+          <h4 class="card-title mb-1">{{ usuarioActual.nombre }}</h4>
+          <span class="badge bg-info text-dark mb-2">{{ usuarioActual.rol }}</span>
+          
+          <p class="text-muted mt-3 small px-3">
+            Mantén tu cuenta segura actualizando tu contraseña periódicamente.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8 mb-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 border-bottom-0">
+          <h5 class="mb-0 fw-bold text-dark"><i class="fas fa-lock me-2 text-warning"></i>Seguridad</h5>
+        </div>
+        <div class="card-body p-4">
+          
+          <div *ngIf="mensajeExito" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ mensajeExito }}
+            <button type="button" class="btn-close" (click)="mensajeExito=''"></button>
+          </div>
+
+          <div *ngIf="mensajeError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ mensajeError }}
+            <button type="button" class="btn-close" (click)="mensajeError=''"></button>
+          </div>
+
+          <form [formGroup]="formPassword" (ngSubmit)="actualizarPassword()">
+            
+            <div class="mb-3">
+              <label class="form-label">Contraseña Actual</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light"><i class="fas fa-key text-muted"></i></span>
+                <input type="password" class="form-control" formControlName="contrasenaActual" placeholder="Ingresa tu contraseña actual"
+                  [class.is-invalid]="formPassword.get('contrasenaActual')?.invalid && formPassword.get('contrasenaActual')?.touched">
+              </div>
+              <div class="invalid-feedback d-block" *ngIf="formPassword.get('contrasenaActual')?.invalid && formPassword.get('contrasenaActual')?.touched">
+                Campo requerido.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Nueva Contraseña</label>
+                <input type="password" class="form-control" formControlName="nuevaContrasena"
+                  [class.is-invalid]="formPassword.get('nuevaContrasena')?.invalid && formPassword.get('nuevaContrasena')?.touched">
+                <div class="form-text text-muted" *ngIf="!formPassword.get('nuevaContrasena')?.errors">Mínimo 6 caracteres.</div>
+                <div class="invalid-feedback">Debe tener al menos 6 caracteres.</div>
+              </div>
+              
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" class="form-control" formControlName="confirmarContrasena"
+                  [class.is-invalid]="formPassword.get('confirmarContrasena')?.touched && (formPassword.hasError('notSame') || formPassword.get('confirmarContrasena')?.invalid)">
+                <div class="invalid-feedback" *ngIf="formPassword.hasError('notSame')">Las contraseñas no coinciden.</div>
+              </div>
+            </div>
+
+            <div class="text-end mt-3 pt-2 border-top">
+              <button type="submit" class="btn btn-primary px-4" [disabled]="cargando || formPassword.invalid">
+                <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+                {{ cargando ? 'Actualizando...' : 'Actualizar Contraseña' }}
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

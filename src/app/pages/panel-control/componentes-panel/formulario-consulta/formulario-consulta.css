@@ -1,0 +1,11 @@
+textarea {
+    resize: none; /* Evita que el usuario rompa el diseño estirando el campo */
+}
+
+.modal-header {
+    background: linear-gradient(to right, #0d6efd, #0b5ed7);
+}
+
+.form-label {
+    font-size: 0.95rem;
+}

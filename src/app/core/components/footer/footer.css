@@ -1,0 +1,37 @@
+
+
+.footer {
+  background-color: var(--color-fondo-sidebar); 
+  color: rgba(255, 255, 255, 0.7); 
+}
+
+.footer h6,
+.footer .bi-heart-pulse-fill {
+  color: var(--color-texto-claro);
+}
+
+.footer a.text-reset {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a.text-reset:hover {
+  color: var(--color-texto-claro) !important; 
+  text-decoration: underline;
+}
+
+.social-icons i {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icons i:hover {
+  transform: scale(1.2);
+  color: var(--color-texto-claro);
+}
+
+.copyright-section {
+  background-color: rgba(0, 0, 0, 0.2); 
+  color: rgba(255, 255, 255, 0.6);
+}

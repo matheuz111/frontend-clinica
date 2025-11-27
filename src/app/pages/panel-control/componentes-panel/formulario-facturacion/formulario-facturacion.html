@@ -1,0 +1,76 @@
+<div class="modal" [class.d-block]="visible" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-file-invoice-dollar me-2"></i>
+          {{ factura ? 'Editar' : 'Nueva' }} Factura
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Cita a Facturar</label>
+            <select class="form-select" formControlName="citaId" 
+              [class.is-invalid]="form.get('citaId')?.invalid && form.get('citaId')?.touched">
+              <option value="">Seleccione una cita pendiente...</option>
+              <option *ngFor="let cita of citasPendientes" [value]="cita.id">
+                {{ cita.fechaCita }} - {{ cita.paciente?.nombre }} {{ cita.paciente?.apellido }}
+              </option>
+            </select>
+            <div class="invalid-feedback">Debe seleccionar una cita.</div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Monto Total</label>
+              <div class="input-group">
+                <span class="input-group-text">S/.</span>
+                <input type="number" class="form-control" formControlName="montoTotal" 
+                  [class.is-invalid]="form.get('montoTotal')?.invalid && form.get('montoTotal')?.touched">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Estado</label>
+              <select class="form-select" formControlName="estadoPago">
+                <option value="Pendiente">Pendiente</option>
+                <option value="Pagado">Pagado</option>
+                <option value="Parcial">Parcial</option>
+                <option value="Anulado">Anulado</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-bold">Tipo de Comprobante</label>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="tipoComprobante" value="Boleta" id="boleta">
+                  <label class="form-check-label" for="boleta">Boleta</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="tipoComprobante" value="Factura" id="factura">
+                  <label class="form-check-label" for="factura">Factura</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardar()" [disabled]="form.invalid || cargando">
+          <span *ngIf="cargando" class="spinner-border spinner-border-sm me-2"></span>
+          Guardar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<div class="container-fluid vh-100 p-0 login-page">
+  <div class="row g-0 h-100">
+    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center align-items-center text-white info-panel">
+      <div class="info-content d-flex flex-column align-items-center text-center p-5">
+        <div class="info-logo mb-4">
+          <i class="bi bi-emoji-smile-fill"></i> 
+        </div>
+        <h1 class="fw-bold mb-3">Sonrisa Plena</h1>
+        <p class="lead">Gestión dental de última generación para tu bienestar.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-7 d-flex flex-column justify-content-center align-items-center form-panel">
+      <div class="form-container p-4 p-md-5">
+
+        <div *ngIf="mensajeError()" class="alert alert-danger d-flex align-items-center mb-4">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <div>{{ mensajeError() }}</div>
+        </div>
+
+        <div *ngIf="modo() === 'login'">
+          <h2 class="fw-bold text-center mb-2">Iniciar Sesión</h2>
+          <p class="text-muted text-center mb-4">Bienvenido a Sonrisa Plena.</p>
+          
+          <form [formGroup]="formularioLogin" (ngSubmit)="enviarFormulario()">
+            
+            <div class="mb-3">
+              <div class="input-wrapper">
+                <input id="login-doc" type="text" class="form-control" 
+                       formControlName="documentoIdentidad" 
+                       required placeholder="Documento de Identidad">
+                <i class="bi bi-person-badge-fill input-icon-right"></i>
+              </div>
+              <div *ngIf="loginCtls['documentoIdentidad'].invalid && (loginCtls['documentoIdentidad'].dirty || loginCtls['documentoIdentidad'].touched)" 
+                   class="validation-error">
+                <div *ngIf="loginCtls['documentoIdentidad'].errors?.['required']">El documento es requerido.</div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <div class="input-wrapper">
+                <input id="login-password" [type]="mostrarContrasena ? 'text' : 'password'" 
+                       class="form-control" formControlName="password" required placeholder="Contraseña">
+                <i class="bi input-icon-right toggle-password" 
+                   [ngClass]="mostrarContrasena ? 'bi-eye-slash' : 'bi-eye'" 
+                   (click)="toggleMostrarContrasena()"></i>
+              </div>
+              <div *ngIf="loginCtls['password'].invalid && (loginCtls['password'].dirty || loginCtls['password'].touched)" 
+                   class="validation-error">
+                <div *ngIf="loginCtls['password'].errors?.['required']">La contraseña es requerida.</div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember-me" [(ngModel)]="recordarme" [ngModelOptions]="{standalone: true}">
+                <label class="form-check-label" for="remember-me">Recordarme</label>
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="formularioLogin.invalid || cargando()">
+                {{ cargando() ? 'Ingresando...' : 'Ingresar' }}
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="text-muted">¿No tienes una cuenta? <a href="#" (click)="cambiarModo(); $event.preventDefault()">Regístrate aquí</a></p>
+          </div>
+        </div>
+
+        <div *ngIf="modo() === 'registro'">
+           <h2 class="fw-bold text-center mb-2">Crear Cuenta de Paciente</h2>
+           <p class="text-muted text-center mb-4">Completa los campos para registrarte.</p>
+           
+           <form [formGroup]="formularioRegistro" (ngSubmit)="enviarFormulario()" novalidate>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input id="reg-nombres" type="text" class="form-control" 
+                           formControlName="nombre" required placeholder="Nombres">
+                    <div *ngIf="registroCtls['nombre'].invalid && (registroCtls['nombre'].dirty || registroCtls['nombre'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['nombre'].errors?.['required']">El nombre es requerido.</div>
+                        <div *ngIf="registroCtls['nombre'].errors?.['pattern']">Solo letras y espacios.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input id="reg-apellidos" type="text" class="form-control" 
+                           formControlName="apellido" required placeholder="Apellidos">
+                    <div *ngIf="registroCtls['apellido'].invalid && (registroCtls['apellido'].dirty || registroCtls['apellido'].touched)" class="validation-error">
+                         <div *ngIf="registroCtls['apellido'].errors?.['required']">El apellido es requerido.</div>
+                         <div *ngIf="registroCtls['apellido'].errors?.['pattern']">Solo letras y espacios.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input id="reg-doc" type="text" class="form-control" 
+                           formControlName="documentoIdentidad" required placeholder="DNI (8 dígitos)"
+                           maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <div *ngIf="registroCtls['documentoIdentidad'].invalid && (registroCtls['documentoIdentidad'].dirty || registroCtls['documentoIdentidad'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['documentoIdentidad'].errors?.['required']">El documento es requerido.</div>
+                        <div *ngIf="registroCtls['documentoIdentidad'].errors?.['minlength']">Debe tener 8 dígitos.</div>
+                        <div *ngIf="registroCtls['documentoIdentidad'].errors?.['pattern']">Solo números.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input id="reg-tel" type="tel" class="form-control" 
+                           formControlName="telefono" required placeholder="Teléfono (9 dígitos)"
+                           maxlength="9" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <div *ngIf="registroCtls['telefono'].invalid && (registroCtls['telefono'].dirty || registroCtls['telefono'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['telefono'].errors?.['required']">El teléfono es requerido.</div>
+                        <div *ngIf="registroCtls['telefono'].errors?.['minlength']">Debe tener 9 dígitos.</div>
+                        <div *ngIf="registroCtls['telefono'].errors?.['pattern']">Solo números.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <input id="reg-email" type="email" class="form-control" 
+                       formControlName="email" required placeholder="Correo Electrónico">
+                 <div *ngIf="registroCtls['email'].invalid && (registroCtls['email'].dirty || registroCtls['email'].touched)" class="validation-error">
+                      <div *ngIf="registroCtls['email'].errors?.['required']">El correo es requerido.</div>
+                      <div *ngIf="registroCtls['email'].errors?.['email']">Debe ser un correo válido.</div>
+                 </div>
+            </div>
+
+            <div class="mb-3">
+                <input id="reg-direccion" type="text" class="form-control" 
+                       formControlName="direccion" required placeholder="Dirección">
+                <div *ngIf="registroCtls['direccion'].invalid && (registroCtls['direccion'].dirty || registroCtls['direccion'].touched)" class="validation-error">
+                    <div *ngIf="registroCtls['direccion'].errors?.['required']">La dirección es requerida.</div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="reg-fecha-nac" class="form-label small text-muted">Fecha de Nacimiento</label>
+                    <input id="reg-fecha-nac" type="date" class="form-control" 
+                           formControlName="fechaNacimiento" required>
+                    <div *ngIf="registroCtls['fechaNacimiento'].invalid && (registroCtls['fechaNacimiento'].dirty || registroCtls['fechaNacimiento'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['fechaNacimiento'].errors?.['required']">La fecha es requerida.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="reg-genero" class="form-label small text-muted">Género</label>
+                    <select id="reg-genero" class="form-select" formControlName="genero" required>
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option value="MASCULINO">Masculino</option>
+                        <option value="FEMENINO">Femenino</option>
+                        <option value="OTRO">Otro</option>
+                    </select>
+                    <div *ngIf="registroCtls['genero'].invalid && (registroCtls['genero'].dirty || registroCtls['genero'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['genero'].errors?.['required']">El género es requerido.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="input-wrapper">
+                      <input id="reg-password" [type]="mostrarContrasena ? 'text' : 'password'" 
+                             class="form-control" formControlName="password" required placeholder="Contraseña">
+                      <i class="bi input-icon-right toggle-password" [ngClass]="mostrarContrasena ? 'bi-eye-slash' : 'bi-eye'" (click)="toggleMostrarContrasena()"></i>
+                    </div>
+                    <div *ngIf="registroCtls['password'].invalid && (registroCtls['password'].dirty || registroCtls['password'].touched)" class="validation-error">
+                        <div *ngIf="registroCtls['password'].errors?.['required']">La contraseña es requerida.</div>
+                        <div *ngIf="registroCtls['password'].errors?.['minlength']">Mínimo 8 caracteres.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                     <div class="input-wrapper">
+                      <input id="reg-confirm-password" [type]="mostrarContrasena ? 'text' : 'password'" 
+                             class="form-control" formControlName="confirmarPassword" required placeholder="Repetir Contraseña">
+                     </div>
+                     <div *ngIf="registroCtls['confirmarPassword'].errors?.['required'] && (registroCtls['confirmarPassword'].dirty || registroCtls['confirmarPassword'].touched)" class="validation-error">
+                         Confirmar la contraseña es requerido.
+                     </div>
+                </div>
+            </div>
+
+            <div *ngIf="formularioRegistro.errors?.['passwordMismatch'] && registroCtls['confirmarPassword'].dirty" 
+                 class="alert alert-danger py-2">
+                 Las contraseñas no coinciden.
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="formularioRegistro.invalid || cargando()">
+                {{ cargando() ? 'Registrando...' : 'Crear Cuenta' }}
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="text-muted">¿Ya tienes una cuenta? <a href="#" (click)="cambiarModo(); $event.preventDefault()">Inicia sesión</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

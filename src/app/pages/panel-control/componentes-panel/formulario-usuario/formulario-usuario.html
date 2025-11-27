@@ -1,0 +1,81 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" *ngIf="visible" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-user-cog me-2"></i>{{ usuario ? 'Editar' : 'Nuevo' }} Usuario
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cerrar()"></button>
+      </div>
+
+      <div class="modal-body p-4">
+        <form [formGroup]="form">
+          
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Nombres</label>
+              <input type="text" class="form-control" formControlName="nombres"
+                [class.is-invalid]="form.get('nombres')?.invalid && form.get('nombres')?.touched">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Apellidos</label>
+              <input type="text" class="form-control" formControlName="apellidos"
+                [class.is-invalid]="form.get('apellidos')?.invalid && form.get('apellidos')?.touched">
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Documento Identidad</label>
+              <input type="text" class="form-control" formControlName="documentoIdentidad" placeholder="DNI/Pasaporte"
+                [class.is-invalid]="form.get('documentoIdentidad')?.invalid && form.get('documentoIdentidad')?.touched">
+              <div class="invalid-feedback">Requerido (usuario de login).</div>
+            </div>
+            
+            <div class="col-md-6">
+              <label class="form-label small fw-bold text-muted">Rol del Sistema</label>
+              <select class="form-select" formControlName="rol">
+                <option *ngFor="let rol of rolesDisponibles" [value]="rol">
+                  {{ rol }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-bold text-muted">Correo Electrónico</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" formControlName="email" placeholder="usuario@dental.com"
+                [class.is-invalid]="form.get('email')?.invalid && form.get('email')?.touched">
+            </div>
+          </div>
+
+          <div class="mb-3" *ngIf="!usuario">
+            <label class="form-label small fw-bold text-muted">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" class="form-control" formControlName="password" placeholder="Mínimo 6 caracteres"
+                [class.is-invalid]="form.get('password')?.invalid && form.get('password')?.touched">
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="form.get('password')?.errors?.['minlength']">
+              La contraseña es muy corta.
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="button" class="btn btn-dark px-4" (click)="guardar()" [disabled]="form.invalid">
+          <i class="fas fa-save me-2"></i>Guardar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
